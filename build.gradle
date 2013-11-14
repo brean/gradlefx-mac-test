@@ -1,0 +1,53 @@
+apply plugin: 'gradlefx'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.gradlefx', name: 'gradlefx', version: '0.6'
+    }
+}
+
+
+
+type = 'swf'
+
+mainClass = 'MyTest.mxml'
+
+repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+                name = 'Apache'
+                addArtifactPattern 'http://apache.cu.be/flex/[revision]/binaries/[module]-[revision]-bin.[ext]'
+        }
+
+    add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = 'Adobe Air SDK'
+            addArtifactPattern 'http://download.macromedia.com/air/mac/download/[revision]/[module].[ext]'
+    }
+}
+
+dependencies {
+    flexSDK group: 'org.apache', name: 'apache-flex-sdk', version: '4.11.0', ext: 'tar.gz'
+    airSDK  group: 'com.adobe', name: 'AdobeAIRSDK', version: '3.9', ext: 'tbz2'
+}
+
+additionalCompilerOptions = [
+  '-headless-server=true'
+]
+
+
+sdkAutoInstall {
+	showPrompts	= false
+}
+
+additionalCompilerOptions = [
+  '-target-player=11.1',
+]
+
+
+
+srcDirs = ['src/']
+
+buildDir = 'bin'
+
